@@ -1,0 +1,29 @@
+# compile verilog/system verilog design source files
+verilog xil_defaultlib  --include "../../../../cpu.srcs/sources_1/new" \
+"../../../../cpu.gen/sources_1/ip/data_ram/sim/data_ram.v" \
+"../../../../cpu.gen/sources_1/ip/inst_ram/sim/inst_ram.v" \
+"../../../../cpu.srcs/sources_1/new/adder.v" \
+"../../../../cpu.srcs/sources_1/new/alu.v" \
+"../../../../cpu.srcs/sources_1/new/alu_dec.v" \
+"../../../../cpu.srcs/sources_1/new/controller.v" \
+"../../../../cpu.srcs/sources_1/new/datapath.v" \
+"../../../../cpu.srcs/sources_1/new/flopenrc.v" \
+"../../../../cpu.srcs/sources_1/new/floprc.v" \
+"../../../../cpu.srcs/sources_1/new/hazard.v" \
+"../../../../cpu.srcs/sources_1/new/hilo_reg.v" \
+"../../../../cpu.srcs/sources_1/new/main_dec.v" \
+"../../../../cpu.srcs/sources_1/new/mips.v" \
+"../../../../cpu.srcs/sources_1/new/mux2.v" \
+"../../../../cpu.srcs/sources_1/new/mux3.v" \
+"../../../../cpu.srcs/sources_1/new/pc.v" \
+"../../../../cpu.srcs/sources_1/new/regfile.v" \
+"../../../../cpu.srcs/sources_1/new/sign_extend.v" \
+"../../../../cpu.srcs/sources_1/new/sl2.v" \
+"../../../../cpu.srcs/sources_1/new/top.v" \
+"../../../../cpu.srcs/sim_1/new/testbench.v" \
+
+# compile glbl module
+verilog xil_defaultlib "glbl.v"
+
+# Do not sort compile order
+nosort

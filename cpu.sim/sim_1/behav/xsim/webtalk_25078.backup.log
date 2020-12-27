@@ -1,0 +1,15 @@
+#-----------------------------------------------------------
+# Webtalk v2020.2 (64-bit)
+# SW Build 3064766 on Wed Nov 18 09:12:47 MST 2020
+# IP Build 3064653 on Wed Nov 18 14:17:31 MST 2020
+# Start of session at: Sat Dec 26 15:32:16 2020
+# Process ID: 25078
+# Current directory: /home/tangzl/cqu/projects/verilog_projects/cpu/cpu.sim/sim_1/behav/xsim
+# Command line: wbtcv -mode batch -source /home/tangzl/cqu/projects/verilog_projects/cpu/cpu.sim/sim_1/behav/xsim/xsim.dir/testbench_behav/webtalk/xsim_webtalk.tcl -notrace
+# Log file: /home/tangzl/cqu/projects/verilog_projects/cpu/cpu.sim/sim_1/behav/xsim/webtalk.log
+# Journal file: /home/tangzl/cqu/projects/verilog_projects/cpu/cpu.sim/sim_1/behav/xsim/webtalk.jou
+#-----------------------------------------------------------
+source /home/tangzl/cqu/projects/verilog_projects/cpu/cpu.sim/sim_1/behav/xsim/xsim.dir/testbench_behav/webtalk/xsim_webtalk.tcl -notrace
+INFO: [Common 17-186] '/home/tangzl/cqu/projects/verilog_projects/cpu/cpu.sim/sim_1/behav/xsim/xsim.dir/testbench_behav/webtalk/usage_statistics_ext_xsim.xml' has been successfully sent to Xilinx on Sat Dec 26 15:32:24 2020. For additional details about this file, please refer to the WebTalk help file at /tools/Xilinx/Vivado/2020.2/doc/webtalk_introduction.html.
+webtalk_transmit: Time (s): cpu = 00:00:00.91 ; elapsed = 00:00:08 . Memory (MB): peak = 424.730 ; gain = 0.102 ; free physical = 1736 ; free virtual = 14600
+INFO: [Common 17-206] Exiting Webtalk at Sat Dec 26 15:32:24 2020...

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="mips_min_tb_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="mips_min_tb" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="389780fs"></ZoomStartTime>
+      <ZoomEndTime time="534981fs"></ZoomEndTime>
+      <Cursor1Time time="406180fs"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="168"></NameColumnWidth>
+      <ValueColumnWidth column_width="59"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="11" />
+   <wvobject type="logic" fp_name="/mips_min_tb/clk">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/mips_min_tb/rst">
+      <obj_property name="ElementShortName">rst</obj_property>
+      <obj_property name="ObjectShortName">rst</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/mips_min_tb/data_ram_wea">
+      <obj_property name="ElementShortName">data_ram_wea</obj_property>
+      <obj_property name="ObjectShortName">data_ram_wea</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/mips_min_tb/rs">
+      <obj_property name="ElementShortName">rs[4:0]</obj_property>
+      <obj_property name="ObjectShortName">rs[4:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/mips_min_tb/rt">
+      <obj_property name="ElementShortName">rt[4:0]</obj_property>
+      <obj_property name="ObjectShortName">rt[4:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/mips_min_tb/rd">
+      <obj_property name="ElementShortName">rd[4:0]</obj_property>
+      <obj_property name="ObjectShortName">rd[4:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/mips_min_tb/alucontrol">
+      <obj_property name="ElementShortName">alucontrol[7:0]</obj_property>
+      <obj_property name="ObjectShortName">alucontrol[7:0]</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/mips_min_tb/mem_wdata">
+      <obj_property name="ElementShortName">mem_wdata[31:0]</obj_property>
+      <obj_property name="ObjectShortName">mem_wdata[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/mips_min_tb/alu_result">
+      <obj_property name="ElementShortName">alu_result[31:0]</obj_property>
+      <obj_property name="ObjectShortName">alu_result[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/mips_min_tb/instr">
+      <obj_property name="ElementShortName">instr[31:0]</obj_property>
+      <obj_property name="ObjectShortName">instr[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/mips_min_tb/pc">
+      <obj_property name="ElementShortName">pc[31:0]</obj_property>
+      <obj_property name="ObjectShortName">pc[31:0]</obj_property>
+   </wvobject>
+</wave_config>
