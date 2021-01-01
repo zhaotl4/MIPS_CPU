@@ -11,15 +11,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="389780fs"></ZoomStartTime>
-      <ZoomEndTime time="534981fs"></ZoomEndTime>
-      <Cursor1Time time="406180fs"></Cursor1Time>
+      <ZoomStartTime time="3070920fs"></ZoomStartTime>
+      <ZoomEndTime time="3219521fs"></ZoomEndTime>
+      <Cursor1Time time="3111120fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="168"></NameColumnWidth>
+      <NameColumnWidth column_width="151"></NameColumnWidth>
       <ValueColumnWidth column_width="59"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="11" />
+   <WVObjectSize size="20" />
    <wvobject type="logic" fp_name="/mips_min_tb/clk">
       <obj_property name="ElementShortName">clk</obj_property>
       <obj_property name="ObjectShortName">clk</obj_property>
@@ -53,10 +53,6 @@
       <obj_property name="ElementShortName">mem_wdata[31:0]</obj_property>
       <obj_property name="ObjectShortName">mem_wdata[31:0]</obj_property>
    </wvobject>
-   <wvobject type="array" fp_name="/mips_min_tb/alu_result">
-      <obj_property name="ElementShortName">alu_result[31:0]</obj_property>
-      <obj_property name="ObjectShortName">alu_result[31:0]</obj_property>
-   </wvobject>
    <wvobject type="array" fp_name="/mips_min_tb/instr">
       <obj_property name="ElementShortName">instr[31:0]</obj_property>
       <obj_property name="ObjectShortName">instr[31:0]</obj_property>
@@ -64,5 +60,47 @@
    <wvobject type="array" fp_name="/mips_min_tb/pc">
       <obj_property name="ElementShortName">pc[31:0]</obj_property>
       <obj_property name="ObjectShortName">pc[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/mips_min_tb/alu_result">
+      <obj_property name="ElementShortName">alu_result[31:0]</obj_property>
+      <obj_property name="ObjectShortName">alu_result[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/mips_min_tb/mips/misp/datapath/hiloreg/hi_reg">
+      <obj_property name="ElementShortName">hi_reg[31:0]</obj_property>
+      <obj_property name="ObjectShortName">hi_reg[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/mips_min_tb/mips/misp/datapath/hiloreg/lo_reg">
+      <obj_property name="ElementShortName">lo_reg[31:0]</obj_property>
+      <obj_property name="ObjectShortName">lo_reg[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/mips_min_tb/mips/data_ram/douta">
+      <obj_property name="ElementShortName">douta[31:0]</obj_property>
+      <obj_property name="ObjectShortName">douta[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/mips_min_tb/mips/mem_rdata_o">
+      <obj_property name="ElementShortName">mem_rdata_o[31:0]</obj_property>
+      <obj_property name="ObjectShortName">mem_rdata_o[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/mips_min_tb/mips/data_ram/ena">
+      <obj_property name="ElementShortName">ena</obj_property>
+      <obj_property name="ObjectShortName">ena</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/mips_min_tb/mips/data_ram/dina">
+      <obj_property name="ElementShortName">dina[31:0]</obj_property>
+      <obj_property name="ObjectShortName">dina[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/mips_min_tb/mips/data_ram/wea">
+      <obj_property name="ElementShortName">wea[3:0]</obj_property>
+      <obj_property name="ObjectShortName">wea[3:0]</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/mips_min_tb/mips/data_ram_read">
+      <obj_property name="ElementShortName">data_ram_read[4:0]</obj_property>
+      <obj_property name="ObjectShortName">data_ram_read[4:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/mips_min_tb/mips/data_ram/addra">
+      <obj_property name="ElementShortName">addra[31:0]</obj_property>
+      <obj_property name="ObjectShortName">addra[31:0]</obj_property>
    </wvobject>
 </wave_config>

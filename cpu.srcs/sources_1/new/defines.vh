@@ -72,6 +72,7 @@
 `define EXE_DIV  6'b011010
 `define EXE_DIVU  6'b011011
 //J type
+`define EXE_BRANCH 6'b000000
 `define EXE_J  6'b000010
 `define EXE_JAL  6'b000011
 `define EXE_JALR  6'b001001

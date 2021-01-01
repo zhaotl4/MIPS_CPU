@@ -21,13 +21,14 @@
 
 
 module pc(
-    input wire clk, rst, en,
-    input wire[31:0] din,
+    input wire clk, rst, en, flushF,
+    input wire[31:0] din, new_pc,
     output reg[31:0] q
 );
 
 always @(negedge clk) begin
     if (rst) q <= -4;
+    else if (flushF) q <= new_pc;
     else if (en) q <= din;
 end
 

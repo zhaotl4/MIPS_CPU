@@ -10,8 +10,14 @@ INFO: [VRFC 10-2263] Analyzing Verilog file "/home/tangzl/cqu/projects/verilog_p
 INFO: [VRFC 10-311] analyzing module alu_dec
 INFO: [VRFC 10-2263] Analyzing Verilog file "/home/tangzl/cqu/projects/verilog_projects/cpu/cpu.srcs/sources_1/new/controller.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module controller
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/tangzl/cqu/projects/verilog_projects/cpu/cpu.srcs/sources_1/new/cp0_reg.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module cp0_reg
 INFO: [VRFC 10-2263] Analyzing Verilog file "/home/tangzl/cqu/projects/verilog_projects/cpu/cpu.srcs/sources_1/new/datapath.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module datapath
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/tangzl/cqu/projects/verilog_projects/cpu/cpu.srcs/sources_1/new/div.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module div
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/tangzl/cqu/projects/verilog_projects/cpu/cpu.srcs/sources_1/new/exception.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module exception
 INFO: [VRFC 10-2263] Analyzing Verilog file "/home/tangzl/cqu/projects/verilog_projects/cpu/cpu.srcs/sources_1/new/flopenrc.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module flopenrc
 INFO: [VRFC 10-2263] Analyzing Verilog file "/home/tangzl/cqu/projects/verilog_projects/cpu/cpu.srcs/sources_1/new/floprc.v" into library xil_defaultlib
@@ -22,6 +28,10 @@ INFO: [VRFC 10-2263] Analyzing Verilog file "/home/tangzl/cqu/projects/verilog_p
 INFO: [VRFC 10-311] analyzing module hilo_reg
 INFO: [VRFC 10-2263] Analyzing Verilog file "/home/tangzl/cqu/projects/verilog_projects/cpu/cpu.srcs/sources_1/new/main_dec.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module main_dec
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/tangzl/cqu/projects/verilog_projects/cpu/cpu.srcs/sources_1/new/mem_read_data.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module mem_read_data
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/tangzl/cqu/projects/verilog_projects/cpu/cpu.srcs/sources_1/new/mem_write_data.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module mem_write_data
 INFO: [VRFC 10-2263] Analyzing Verilog file "/home/tangzl/cqu/projects/verilog_projects/cpu/cpu.srcs/sources_1/new/mips.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module mips
 INFO: [VRFC 10-2263] Analyzing Verilog file "/home/tangzl/cqu/projects/verilog_projects/cpu/cpu.srcs/sources_1/new/mux2.v" into library xil_defaultlib

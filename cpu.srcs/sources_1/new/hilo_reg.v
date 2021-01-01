@@ -22,19 +22,27 @@
 
 module hilo_reg(
 	input wire clk,rst,
-	input wire[1:0] we,
+	input wire[2:0] we,
 	input wire[31:0] hilo,
+	input wire[63:0] div_hilo,
+	input wire[63:0] mult_hilo,
 	output wire[31:0] hi_o,lo_o
 );
 
 reg [31:0] hi_reg, lo_reg;
-	
+
 always @(posedge clk) begin
-	if (we == 2'b10) begin
+	if (we == 3'b001) begin
 		lo_reg <= hilo;
 	end
-	else if (we == 2'b11) begin
+	else if (we == 3'b010) begin
 		hi_reg <= hilo;
+	end
+	else if (we == 3'b011) begin
+		{hi_reg, lo_reg} <= div_hilo;
+	end
+	else if (we == 3'b100) begin
+		{hi_reg, lo_reg} <= mult_hilo;
 	end
 	else begin
 		lo_reg <= lo_reg;

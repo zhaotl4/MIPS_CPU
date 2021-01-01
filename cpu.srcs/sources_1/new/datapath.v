@@ -24,12 +24,13 @@ module datapath(
     input wire clk, rst,
     input wire[31:0] instr, mem_rdata,
     output wire [31:0] pc, alu_result, mem_wdata, instrD, ALUOutM, WriteDataM,
-    output wire flushE,
-    input wire jump, branch, alusrc, memtoreg, regwrite, regdst, 
-    input wire memtoregE, memwriteE, alusrcE, regdstE, regwriteE, branchE,
-    input wire memtoregM, memwriteM, regwriteM, 
-    input wire memtoregW, regwriteW,
-    input wire [1:0] hilowriteE,
+    output wire flushF, flushD, flushE, flushM, flushW, divstall,
+    input wire jump, jal, jr, bal, branch, alusrc, memtoreg, regwrite, regdst, 
+    input wire syscall, break, eret, instr_valid, adel, ades,
+    input wire memtoregE, alusrcE, regdstE, regwriteE, branchE, divstartE, divsignE, cp0_readE, cp0_writeE,
+    input wire memtoregM, regwriteM, cp0_writeM,
+    input wire memtoregW, regwriteW, cp0_writeW,
+    input wire [2:0] hilowriteE,
     input wire [7:0] alucontrol
 );
 
@@ -43,16 +44,24 @@ wire[31:0] pc_plus4E, ALUOutW, ReadDataW, WriteRegM, WriteRegW;
 wire[4:0] RsE, RtE, RdE, SaE;
 wire ZeroM;
 
-// about HILO
-wire [31:0] hi, lo;
+wire divfinish;
+
+// about HILO and cp0
+wire over_flow, timer_int_o, is_in_delayslotF, is_in_delayslotD, is_in_delayslotE, is_in_delayslotM;
+wire [7:0] exceptF, exceptD, exceptE, exceptM;
+wire [31:0] hi, lo, cp0_read_data, excepttype, pcD, pcE, pcM, new_pcM, bad_addr;
+wire [31:0] count_o, compare_o, status_o, cause_o, epc_o, config_o, prid_o, badvaddr;
+wire [63:0] div_hilo, mult_hilo;
 
 // about hazard
 wire [1:0] forwardAE, forwardBE;
 wire [31:0] aluA, aluB, pc_branch_souce1, pc_branch_souce2;
-wire stallF , stallD, forwardAD, forwardBD;
+wire stallF, stallD, stallE, forwardAD, forwardBD;
 
 assign pcsrc = (pc_branch_souce1 == pc_branch_souce2) & branch;
 assign mem_wdata = WriteDataM;
+assign is_in_delayslotF = (jump | jal | jr | bal | branch);
+assign divstall = (divstartE & ~divfinish) ? 1:0;
 
 // mux2 for pc_next
 mux2 #(32) mux_pc_brach(
@@ -92,8 +101,9 @@ pc PC(
     .clk(clk),
     .rst(rst),
     .en(~stallF),
-//    .en(1),
+    .flushF(flushF),
     .din(pc_next_jump),
+    .new_pc(new_pcM),
     .q(pc)
 );
 
@@ -110,9 +120,14 @@ adder pc_plus_4(
     .y(pc_plus4)
 );
 
+assign exceptF = (pc[1:0] == 2'b00) ? 8'b00000000 : 8'b10000000;
+
 // Fetch-Decode
-flopenrc #(32) flopInstr(clk, rst, ~stallD, 1'b0, instr, instrD);
-flopenrc #(32) flopPc(clk, rst, ~stallD, 1'b0, pc_plus4, pc_plus4D);
+flopenrc #(1) flopdelaysoltD(clk, rst, ~stallD, flushD, is_in_delayslotF, is_in_delayslotD);
+flopenrc #(32) floppcD(clk, rst, ~stallD, flushD, pc, pcD);
+flopenrc #(8) flopexcept(clk, rst, ~stallD, flushD, exceptF, exceptD);
+flopenrc #(32) flopInstr(clk, rst, ~stallD, flushD, instr, instrD);
+flopenrc #(32) flopPc(clk, rst, ~stallD, flushD, pc_plus4, pc_plus4D);
 
 // pc_branch = pc + 4 + (sign_ext imm << 2)
 adder pc_to_branch(
@@ -161,18 +176,23 @@ hilo_reg hiloreg(
     .rst(rst),
     .we(hilowriteE),
     .hilo(aluA),
+    .div_hilo(div_hilo),
+    .mult_hilo(mult_hilo),
     .hi_o(hi),
     .lo_o(lo)
 );
 
 // Decode-Execute
-flopenrc #(32) flopRd1(clk, rst, 1'b1, flushE, rd1, rd1E);
-flopenrc #(32) flopRd2(clk, rst, 1'b1, flushE, rd2, rd2E);
-flopenrc #(5) flopRsE(clk, rst, 1'b1, flushE, instrD[25:21], RsE);
-flopenrc #(5) flopRtE(clk, rst, 1'b1, flushE, instrD[20:16], RtE);
-flopenrc #(5) flopRdE(clk, rst, 1'b1, flushE, instrD[15:11], RdE);
-flopenrc #(5) flopSaE(clk, rst, 1'b1, flushE, instrD[10:6], SaE);
-flopenrc #(32) flopSignimmE(clk, rst, 1'b1, flushE, imm_extend, SignimmE);
+flopenrc #(1) flopdelaysoltE(clk, rst, ~stallE, flushE, is_in_delayslotD, is_in_delayslotE);
+flopenrc #(32) floppcE(clk, rst, ~stallE, flushE, pcD, pcE);
+flopenrc #(8) flopexceptE(clk, rst, ~stallE, flushE, {exceptD[6], adel, ades, syscall, break, eret, instr_valid, exceptD[0]}, exceptE);
+flopenrc #(32) flopRd1(clk, rst, ~stallE, flushE, rd1, rd1E);
+flopenrc #(32) flopRd2(clk, rst, ~stallE, flushE, rd2, rd2E);
+flopenrc #(5) flopRsE(clk, rst, ~stallE, flushE, instrD[25:21], RsE);
+flopenrc #(5) flopRtE(clk, rst, ~stallE, flushE, instrD[20:16], RtE);
+flopenrc #(5) flopRdE(clk, rst, ~stallE, flushE, instrD[15:11], RdE);
+flopenrc #(5) flopSaE(clk, rst, ~stallE, flushE, instrD[10:6], SaE);
+flopenrc #(32) flopSignimmE(clk, rst, ~stallE, flushE, imm_extend, SignimmE);
 //flopenrc #(32) flopPCPluse(clk, rst, 1'b1, flushE, pc_plus4D, pc_plus4E);
 
 // mux2 for alu_srcB
@@ -192,31 +212,87 @@ alu alu(
     .b(alu_srcB),
     .c(SaE),
     .hilo({hi, lo}),
+    .cp0(cp0_read_data),
     .f(alucontrol),  // alu control
     .s(alu_result),
-    .over_flow(),
+    .mult_hilo(mult_hilo),
+    .over_flow(over_flow),
     .zero(zero)
 );
 
+// div
+div div(
+    .clk(clk),
+    .rst(rst),
+    .signed_div_i(divsignE),
+    .opdata1_i(aluA),
+    .opdata2_i(alu_srcB),
+    .start_i(divstartE),
+    .annul_i(1'b0),
+    .result_o(div_hilo),
+    .ready_o(divfinish)
+);
+
 // Execute-Memory
-flopenrc #(32) flopAlu(clk, rst, 1'b1, 1'b0, alu_result, ALUOutM);
-flopenrc #(1) flopZero(clk, rst, 1'b1, 1'b0, zero, ZeroM);
-flopenrc #(32) flopWriteData(clk, rst, 1'b1, 1'b0, aluB, WriteDataM);
-flopenrc #(32) flopPCBranch(clk, rst, 1'b1, 1'b0, pc_branch, PCBranchM);
-flopenrc #(32) flopWriteReg(clk, rst, 1'b1, 1'b0, write2reg, WriteRegM);
+flopenrc #(1) flopdelaysoltM(clk, rst, 1'b1, flushM, is_in_delayslotE, is_in_delayslotM);
+flopenrc #(32) floppcM(clk, rst, 1'b1, flushM, pcE, pcM);
+flopenrc #(8) flopexceptM(clk, rst, 1'b1, flushM, {exceptE[7:1], over_flow}, exceptM);
+flopenrc #(32) flopAlu(clk, rst, 1'b1, flushM, alu_result, ALUOutM);
+flopenrc #(1) flopZero(clk, rst, 1'b1, flushM, zero, ZeroM);
+flopenrc #(32) flopWriteData(clk, rst, 1'b1, flushM, aluB, WriteDataM);
+flopenrc #(32) flopPCBranch(clk, rst, 1'b1, flushM, pc_branch, PCBranchM);
+flopenrc #(32) flopWriteReg(clk, rst, 1'b1, flushM, write2reg, WriteRegM);
 
 // Memory-Writeback
-flopenrc #(32) flopAluW(clk, rst, 1'b1, 1'b0, ALUOutM, ALUOutW);
-flopenrc #(32) flopMemData(clk, rst, 1'b1, 1'b0, mem_rdata, ReadDataW);
-flopenrc #(32) flopWriteRegW(clk, rst, 1'b1, 1'b0, WriteRegM, WriteRegW);
+flopenrc #(32) flopAluW(clk, rst, 1'b1, flushW, ALUOutM, ALUOutW);
+flopenrc #(32) flopMemData(clk, rst, 1'b1, flushW, mem_rdata, ReadDataW);
+flopenrc #(32) flopWriteRegW(clk, rst, 1'b1, flushW, WriteRegM, WriteRegW);
 
 // hazard
 hazard hazard(
     .RsD(instrD[25:21]), .RtD(instrD[20:16]),
+    .divstall(divstall), .excepttype(excepttype),
     .RsE(RsE), .RtE(RtE), .writeregE(write2reg), .writeregM(WriteRegM), .writeregW(WriteRegW),
     .regwriteE(regwriteE), .regwriteM(regwriteM), .regwriteW(regwriteW), .memtoregE(memtoregE), .branchD(branch),
     .forwardAD(forwardAD), .forwardBD(forwardBD), .forwardAE(forwardAE), .forwardBE(forwardBE),
-    .stallF(stallF), .stallD(stallD), .flushE(flushE)
+    .stallF(stallF), .stallD(stallD), .stallE(stallE), .flushF(flushF), .flushD(flushD), .flushE(flushE), .flushM(flushM), .flushW(flushW)
+);
+
+// exception
+exception exception(
+    .rst(rst),
+    .except(exceptM),
+    .status(status_o),
+    .cause(cause_o),
+    .epc(epc_o),
+    .excepttype(excepttype),
+    .new_pcM(new_pcM)
+);
+
+assign bad_addr = (exceptM[7]) ? pcM : (exceptM[6] || exceptM[5]) ? ALUOutM : 32'b0;
+// cp0
+cp0_reg cp0_reg(
+    .clk(clk),
+    .rst(rst),
+    .we_i(cp0_writeE),
+    .waddr_i(RdE),
+    .raddr_i(RdE),
+    .data_i(aluB),
+    .int_i(6'b000000),
+    .excepttype_i(excepttype),
+    .current_inst_addr_i(pcM),
+    .is_in_delayslot_i(is_in_delayslotM),
+    .bad_addr_i(bad_addr),
+    .data_o(cp0_read_data),
+    .count_o(count_o),
+    .compare_o(compare_o),
+    .status_o(status_o),
+    .cause_o(cause_o),
+    .epc_o(epc_o),
+    .config_o(config_o),
+    .prid_o(prid_o),
+    .badvaddr(badvaddr),
+    .timer_int_o(timer_int_o)
 );
 
 endmodule
